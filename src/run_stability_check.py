@@ -374,6 +374,21 @@ def build_condition_delta_records(condition_records):
     return delta_records
 
 
+# 第二個實驗：把 sensor 的額外價值按照 operating condition 拆開看。
+#
+# 先用 pressure + flow 當作 Hydraulic only baseline，再加入 motor power、
+# temperature 或 vibration，觀察 pump leakage classification 有沒有變好。
+#
+# 接著把提升量按照 cooler_condition、valve_condition、
+# accumulator_pressure 拆開。這樣可以看出新 sensor 的幫助主要出現在哪些
+# operating state，以及在哪些 state 幫助比較小，甚至可能沒有提升。
+#
+# 重點不是這個 sensor 在任何情況下都一定有用，而是同一個 sensor 的額外
+# 價值可能會隨 operating state 改變。例如 motor power 整體可以提升
+# leakage classification，但在不同 accumulator pressure 下，提升幅度不一樣。
+#
+# 這裡先把它當作 cycle-level 的比較，用來描述資料中的差異，不把它寫成
+# 所有設備都適用的 sensor 結論。
 def run_condition_stratification(
     eligible_profile,
     oof_pred,
