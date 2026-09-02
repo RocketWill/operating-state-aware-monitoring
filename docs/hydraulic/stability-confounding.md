@@ -48,6 +48,26 @@ Motor power has a positive macro-F1 delta in all five seeds, from `+0.0090` to `
 
 The same split assignment is reused for all five combinations within a seed. The generated prediction file therefore keeps the comparison paired at the cycle and fold level. `build_split_records()` also checks that the group sets in the training and test parts of every fold are disjoint.
 
+## Simple interpretation
+
+The second experiment asks whether a sensor's extra value changes with the operating condition.
+
+First, use pressure + flow as the `Hydraulic only` baseline. Then add motor power, temperature, or vibration and check whether pump-leakage classification improves.
+
+Next, split the improvement by:
+
+```text
+cooler condition
+valve condition
+accumulator pressure
+```
+
+This shows where a new sensor helps more, where the help is smaller, and where there may be no improvement.
+
+The point is not that one sensor is useful in every condition. The same sensor may provide different extra value under different operating states. For example, motor power improves leakage classification overall, but the size of the improvement is different at different accumulator pressures.
+
+This is a descriptive cycle-level comparison. It describes the differences in this dataset and does not make a sensor conclusion for every hydraulic system.
+
 ## Condition strata
 
 The condition analysis uses the seed-42 out-of-fold predictions. Each row below gives the observed support and the macro-F1 delta against the hydraulic prediction in that same stratum. Hydraulic is the zero reference and is not repeated in the delta columns.
