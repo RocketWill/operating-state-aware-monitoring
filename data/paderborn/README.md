@@ -46,6 +46,38 @@ MATLAB 檔案內有自己的時間軸，而且不同 recording 的點數可能�
 
 另外，`N09_M07_F10_KA04_17.mat` 是第 18 筆 recording 的替代副本，兩者訊號完全相同。後續實驗不能讓這兩筆同時增加資料權重。
 
+## 如何理解這個資料集
+
+Paderborn dataset 可以先簡單理解成：**軸承本身已經有已知的健康狀態，再把這些軸承放到不同 operating conditions 下運轉並記錄 signals。**
+
+資料中的 bearings 可以先分成三類：
+
+- **Healthy**：正常軸承。
+- **Artificial damage**：人工製造損傷的軸承。
+- **Accelerated-lifetime damage**：經過 accelerated lifetime test 後產生損傷的軸承。這是資料集中的一種 damage 類別，不直接等同於現場故障。
+
+因此 bearing 的狀態不是從 signal 後來推測出來的，而是在量測之前就已經知道。模型要做的是看這些已知狀態，能不能從 current、vibration 或其他 measurements 中被區分出來。
+
+每一顆 bearing 會放到相同的 test rig 上，在四種 operating conditions 下運轉。這些 conditions 主要改變 rotational speed、load torque 或 radial force。運轉過程中同步記錄 vibration、motor current，以及 speed、torque、force 和 temperature 等 measurements。
+
+可以把資料結構理解成：
+
+```text
+bearing condition
+    +
+operating condition
+    ↓
+measured signals
+```
+
+例如，同一顆 damaged bearing 會在不同轉速、扭矩和徑向負載下被量測。這讓我們不只可以研究 signal 能不能區分 healthy 和 damaged bearing，也可以進一步觀察：
+
+> 當 operating condition 改變後，原本有用的 measurement 是否仍然可靠？
+
+這也是這個 study 使用 Paderborn dataset 的主要原因。後續會比較 current、vibration，以及 current + vibration，在 matched condition 和 condition shift 下的差異。
+
+為了避免模型只是記住某一顆 bearing 的特徵，後續 train/test split 會以 **bearing 為單位**。同一顆 bearing 的不同 conditions 和 recordings 不會同時出現在 training 和 test data。
+
 ## Source, citation, and license / 來源、引用與授權
 
 - Dataset: [KAt Bearing DataCenter](https://mb.uni-paderborn.de/kat/forschung/bearing-datacenter)
