@@ -78,6 +78,30 @@ measured signals
 
 為了避免模型只是記住某一顆 bearing 的特徵，後續 train/test split 會以 **bearing 為單位**。同一顆 bearing 的不同 conditions 和 recordings 不會同時出現在 training 和 test data。
 
+## 02 單一 recording 讀取與訊號檢查
+
+先拿兩個 recording 試讀：
+
+```text
+K001  healthy   256088 samples
+KA04  damaged   256001 samples
+```
+
+兩個檔案都可以讀到 `phase_current_1`、`phase_current_2` 和 `vibration_1`。每筆大約 4 秒，current 和 vibration 在同一筆 recording 裡 sample 數一致，end time 也對得上，沒有 non-finite value。
+
+所以後面不直接假設每筆都是 `4 × 64000 = 256000` points。實際點數會有一點差異，讀取和後續 feature extraction 先以 `.mat` 裡的 time axis 為準。
+
+目前算出的 observed sampling rate 大約在 64 kHz 附近：
+
+```text
+K001  64021.87 Hz
+KA04  64000.01 Hz
+```
+
+這裡的 64 kHz 還是當作 nominal sampling rate。observed rate 主要用來確認資料讀取是否合理，不把小差異解釋成不同的 sensor setting。
+
+`Unit` 欄位目前沒有有效內容，所以先寫成 `unknown`，不自行猜 current 或 vibration 的實際單位。
+
 ## Source, citation, and license / 來源、引用與授權
 
 - Dataset: [KAt Bearing DataCenter](https://mb.uni-paderborn.de/kat/forschung/bearing-datacenter)
