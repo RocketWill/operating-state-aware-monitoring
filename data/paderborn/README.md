@@ -17,6 +17,33 @@ The main signals are:
 | `force`, `speed`, `torque` | Mechanical operating measurements | 4 kHz |
 | `temp_2_bearing_module` | Bearing-module temperature | 1 Hz |
 
+The dataset can be viewed as a nested structure:
+
+```text
+Paderborn dataset
+└── K001  (healthy bearing)
+    ├── Condition A
+    │   ├── Recording 01
+    │   │   ├── current 1   -> one 4-second signal
+    │   │   ├── current 2   -> one 4-second signal
+    │   │   └── vibration    -> one 4-second signal
+    │   ├── Recording 02
+    │   ├── Recording 03
+    │   └── ... Recording 20
+    ├── Condition B
+    │   └── 20 recordings
+    ├── Condition C
+    │   └── 20 recordings
+    └── Condition D
+        └── 20 recordings
+
+K002  (healthy)   -> same four conditions × 20 recordings
+KA04  (damaged)   -> same four conditions × 20 recordings
+...
+```
+
+One recording therefore contains several synchronized signal channels. It is the basic unit used by the first reading check and the later recording-level experiments.
+
 The local `raw/` directory currently contains all 32 bearing directories, with 80 MATLAB recordings and 2 PDFs per bearing. The first primary protocol uses 6 healthy bearings and 14 accelerated-lifetime damaged bearings; the 12 artificial-damage bearings are also available locally for later comparison. Raw data and extracted recordings stay local and are not committed to Git.
 
 The MATLAB files contain their own time arrays. Sample counts can vary slightly between recordings, so readers should use the recorded time axis instead of assuming a fixed number of samples. The `Unit` fields in the checked files are empty. Signal units and scaling should therefore remain marked as unverified until they can be traced to source metadata.
@@ -39,6 +66,43 @@ One known duplicate is also present: `N09_M07_F10_KA04_17.mat` is a replacement 
 | `vibration_1` | Bearing housing 的加速度訊號 | 64 kHz |
 | `force`, `speed`, `torque` | Operating condition 的機械量測 | 4 kHz |
 | `temp_2_bearing_module` | Bearing module temperature | 1 Hz |
+
+資料結構可以先看成這樣：
+
+```text
+Paderborn Dataset
+│
+├── K001  ← healthy bearing
+│   │
+│   ├── Condition A
+│   │   ├── Recording 01
+│   │   │   ├── current 1 → 一條約 4 秒 signal
+│   │   │   ├── current 2 → 一條約 4 秒 signal
+│   │   │   └── vibration → 一條約 4 秒 signal
+│   │   │
+│   │   ├── Recording 02
+│   │   ├── Recording 03
+│   │   └── ... 到 20
+│   │
+│   ├── Condition B
+│   │   └── 20 recordings
+│   │
+│   ├── Condition C
+│   │   └── 20 recordings
+│   │
+│   └── Condition D
+│       └── 20 recordings
+│
+├── K002  ← healthy
+│   └── 一樣是 4 conditions × 20 recordings
+│
+├── KA04  ← damaged
+│   └── 一樣是 4 conditions × 20 recordings
+│
+└── ...
+```
+
+所以一筆 recording 裡面不是只有一條 signal，而是同時有幾個同步量測的 channels。後面的實驗先把一筆 recording 當成一個樣本，不先切成很多 windows。
 
 目前 `raw/` 已解壓全部 32 個 bearing 目錄，每個都有 80 個 `.mat` 和 2 個 PDF。第一版 primary protocol 使用 6 個 healthy bearings 和 14 個 accelerated-lifetime damaged bearings，另外 12 個 artificial-damage bearings 也保留，之後可以再做延伸比較。Raw data 與解壓後的 recordings 都保留在本地，不提交到 Git。
 
