@@ -17,7 +17,7 @@ The main signals are:
 | `force`, `speed`, `torque` | Mechanical operating measurements | 4 kHz |
 | `temp_2_bearing_module` | Bearing-module temperature | 1 Hz |
 
-The local `raw/` directory currently contains the `K001` healthy-bearing archive and the `KA04` damaged-bearing archive. They are used to check the MATLAB structure before downloading the full dataset. Raw archives and extracted recordings stay local and are not committed to Git.
+The local `raw/` directory currently contains all 32 bearing directories, with 80 MATLAB recordings and 2 PDFs per bearing. The first primary protocol uses 6 healthy bearings and 14 accelerated-lifetime damaged bearings; the 12 artificial-damage bearings are also available locally for later comparison. Raw data and extracted recordings stay local and are not committed to Git.
 
 The MATLAB files contain their own time arrays. Sample counts can vary slightly between recordings, so readers should use the recorded time axis instead of assuming a fixed number of samples. The `Unit` fields in the checked files are empty. Signal units and scaling should therefore remain marked as unverified until they can be traced to source metadata.
 
@@ -40,7 +40,7 @@ One known duplicate is also present: `N09_M07_F10_KA04_17.mat` is a replacement 
 | `force`, `speed`, `torque` | Operating condition 的機械量測 | 4 kHz |
 | `temp_2_bearing_module` | Bearing module temperature | 1 Hz |
 
-目前 `raw/` 只有 healthy bearing `K001` 和 damaged bearing `KA04`，先用來確認 MATLAB 檔案結構，再決定完整下載範圍。Raw archives 與解壓後的 recordings 都保留在本地，不提交到 Git。
+目前 `raw/` 已解壓全部 32 個 bearing 目錄，每個都有 80 個 `.mat` 和 2 個 PDF。第一版 primary protocol 使用 6 個 healthy bearings 和 14 個 accelerated-lifetime damaged bearings，另外 12 個 artificial-damage bearings 也保留，之後可以再做延伸比較。Raw data 與解壓後的 recordings 都保留在本地，不提交到 Git。
 
 MATLAB 檔案內有自己的時間軸，而且不同 recording 的點數可能略有差異。讀取時應使用檔案內的時間資料，不要直接假設每筆都是固定點數。目前抽查檔案的 `Unit` 欄位是空的，因此 signal unit 和 scaling 在找到明確來源前，仍標示為未確認。
 
