@@ -274,6 +274,24 @@ dataset reference](references/hydraulic/README.md) for the retained source and
 license record. The dataset license does not assign a license to the project
 source code.
 
+## Paderborn case
+
+The Paderborn case studies whether current and vibration measurements can separate healthy and damaged bearings when the operating condition changes. One recording is one sample. The first protocol uses 6 healthy bearings and 14 accelerated-lifetime damaged bearings, with bearing-level folds and four fixed operating conditions.
+
+The local data layout, source links, and signal notes are in [Paderborn dataset notes](data/paderborn/README.md). The reproducibility steps are in [Paderborn reproducibility](docs/paderborn/reproducibility.md).
+
+Main Paderborn runs:
+
+| Experiment | Command |
+|---|---|
+| Single recording check | `conda run --no-capture-output -n windfusion python src/read_paderborn_recording.py` |
+| Fixed target and split | `conda run --no-capture-output -n windfusion python src/build_paderborn_protocol.py` |
+| Matched sensor comparison | `conda run --no-capture-output -n windfusion python src/run_paderborn_matched_sensor_comparison.py` |
+| Four-condition robustness | `conda run --no-capture-output -n windfusion python src/run_paderborn_four_condition_robustness.py` |
+| Signal feature interpretation | `conda run --no-capture-output -n windfusion python src/analyze_paderborn_signal_features.py` |
+
+The raw Paderborn recordings and generated outputs remain local and are not committed.
+
 ## Scope limits
 
 This case does not establish a universally optimal sensor set, a cross-device
