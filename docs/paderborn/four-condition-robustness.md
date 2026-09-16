@@ -126,4 +126,12 @@ The local outputs are:
 - `outputs/paderborn_four_condition_robustness/predictions.csv`
 - `outputs/paderborn_four_condition_robustness/run_metadata.json`
 
+The first figure can be generated with:
+
+```text
+conda run --no-capture-output -n windfusion python src/plot_paderborn_robustness_bars.py
+```
+
+It is saved locally as `outputs/paderborn_figures/matched_shifted_macro_f1.png`.
+
 The public source is [`src/run_paderborn_four_condition_robustness.py`](../../src/run_paderborn_four_condition_robustness.py).
