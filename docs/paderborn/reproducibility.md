@@ -51,6 +51,9 @@ conda run --no-capture-output -n windfusion python src/run_paderborn_matched_sen
 conda run --no-capture-output -n windfusion python src/run_paderborn_shifted_sensor_comparison.py
 conda run --no-capture-output -n windfusion python src/run_paderborn_four_condition_robustness.py
 conda run --no-capture-output -n windfusion python src/analyze_paderborn_signal_features.py
+conda run --no-capture-output -n windfusion python src/plot_paderborn_robustness_bars.py
+conda run --no-capture-output -n windfusion python src/plot_paderborn_shift_drop_heatmap.py
+conda run --no-capture-output -n windfusion python src/plot_paderborn_vibration_rms.py
 ```
 
 The audit and protocol steps should be completed before the classification runs. The protocol script creates the local manifest and fixed bearing-level folds under `outputs/paderborn_protocol/`.
@@ -60,7 +63,7 @@ The audit and protocol steps should be completed before the classification runs.
 Compile the Paderborn scripts without running the data experiments:
 
 ```text
-conda run --no-capture-output -n windfusion python -m py_compile src/read_paderborn_recording.py src/audit_paderborn_recordings.py src/build_paderborn_protocol.py src/run_paderborn_matched_vibration_baseline.py src/run_paderborn_matched_sensor_comparison.py src/run_paderborn_shifted_sensor_comparison.py src/run_paderborn_four_condition_robustness.py src/analyze_paderborn_signal_features.py
+conda run --no-capture-output -n windfusion python -m py_compile src/read_paderborn_recording.py src/audit_paderborn_recordings.py src/build_paderborn_protocol.py src/run_paderborn_matched_vibration_baseline.py src/run_paderborn_matched_sensor_comparison.py src/run_paderborn_shifted_sensor_comparison.py src/run_paderborn_four_condition_robustness.py src/analyze_paderborn_signal_features.py src/plot_paderborn_robustness_bars.py src/plot_paderborn_shift_drop_heatmap.py src/plot_paderborn_vibration_rms.py
 ```
 
 The experiments use deterministic bearing-level folds, fixed feature names, fixed sensor groups, and fixed condition-selection rules. No random seed is needed for the current protocol.

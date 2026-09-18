@@ -49,6 +49,8 @@ def load_rows():
         channels = {channel["Name"]: channel for channel in record["Y"]}
         rows.append(
             {
+                "bearing_id": item["bearing_id"],
+                "recording_id": item["recording_id"],
                 "condition": item["condition"],
                 "label": item["label"],
                 "features": {
@@ -95,6 +97,25 @@ def main():
         writer = csv.DictWriter(file, fieldnames=fields)
         writer.writeheader()
         writer.writerows(summary)
+
+    recording_features = []
+    for row in rows:
+        recording_row = {
+            "bearing_id": row["bearing_id"],
+            "recording_id": row["recording_id"],
+            "condition": row["condition"],
+            "label": row["label"],
+        }
+        for channel in CHANNELS:
+            for feature in FEATURE_NAMES:
+                recording_row[f"{channel}_{feature}"] = row["features"][channel][feature]
+        recording_features.append(recording_row)
+
+    with (OUTPUT_DIR / "recording_features.csv").open("w", newline="") as file:
+        fields = list(recording_features[0].keys())
+        writer = csv.DictWriter(file, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(recording_features)
 
     print(f"rows: {len(rows)}")
     for condition in sorted({row["condition"] for row in rows}):

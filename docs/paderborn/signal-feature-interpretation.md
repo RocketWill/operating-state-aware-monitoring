@@ -83,7 +83,7 @@ mean / std / rms / peak_to_peak
 
 > vibration 在目前資料裡提供了比較明顯的 damage-related information，但這個差異的大小和方向會隨 operating condition 改變。
 
-這一步只能支持 feature-level 的理解，還不能當成 causal explanation。下一步如果要再細看，可以把 RMS、STD 的 distribution 畫出來，確認差異是整體移動，還是只有少數 recordings 拉開平均值。
+這一步只能支持 feature-level 的理解，還不能當成 causal explanation。現在的 recording-level boxplot 可以看到 recording 之間的變異，但同一顆 bearing 的 recordings 會重複出現。另一張 bearing-level 圖先把同一顆 bearing 在同一個 condition 下的 RMS 取 median，再比較 6 顆 healthy 和 14 顆 damaged，並把每顆 bearing 的點疊上去。這樣更接近前面 train/test protocol 使用的獨立單位。
 
 ## N09_M07_F10 的特殊現象
 
@@ -120,5 +120,26 @@ Macro-F1 反而提升到 `0.8081`。也就是在這個 condition 下，使用相
 The local output is:
 
 - `outputs/paderborn_signal_features/feature_summary.csv`
+- `outputs/paderborn_signal_features/recording_features.csv`
 
-The public source is [`src/analyze_paderborn_signal_features.py`](../../src/analyze_paderborn_signal_features.py).
+The vibration RMS distribution figure can be generated with:
+
+```text
+conda run --no-capture-output -n windfusion python src/plot_paderborn_vibration_rms.py
+```
+
+It is saved locally as `outputs/paderborn_figures/vibration_rms_distribution.png`.
+
+## Figure 3
+
+The formal Figure 3 uses the bearing-level version. It first takes the median RMS of the recordings belonging to each bearing under each condition, then plots the six healthy and fourteen damaged bearing values with the individual bearing points overlaid:
+
+```text
+outputs/paderborn_figures/vibration_rms_bearing_level.png
+```
+
+> Each point represents one bearing, using the median RMS across its eligible recordings under the corresponding operating condition.
+
+The recording-level figure remains available as a supplementary view of raw recording variation. The bearing-level figure follows the independence unit used by the train/test protocol more closely and is the main Figure 3.
+
+The public sources are [`src/analyze_paderborn_signal_features.py`](../../src/analyze_paderborn_signal_features.py) and [`src/plot_paderborn_vibration_rms.py`](../../src/plot_paderborn_vibration_rms.py).
