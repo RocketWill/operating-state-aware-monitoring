@@ -134,4 +134,12 @@ conda run --no-capture-output -n windfusion python src/plot_paderborn_robustness
 
 It is saved locally as `outputs/paderborn_figures/matched_shifted_macro_f1.png`.
 
+The shift-effect heatmap can be generated with:
+
+```text
+conda run --no-capture-output -n windfusion python src/plot_paderborn_shift_drop_heatmap.py
+```
+
+It is saved locally as `outputs/paderborn_figures/shifted_minus_matched_macro_f1.png`.
+
 The public source is [`src/run_paderborn_four_condition_robustness.py`](../../src/run_paderborn_four_condition_robustness.py).
