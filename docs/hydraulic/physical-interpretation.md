@@ -59,6 +59,14 @@ by the observed `pump_leakage` label; they are not estimates of a time series.
 | Temperature | `TS3` | Temperature | °C | 46.827 | 46.592 | 46.821 |
 | Temperature | `TS4` | Temperature | °C | 40.055 | 39.921 | 40.081 |
 
+![Cycle-mean distributions by pump leakage label for 13 hydraulic measurement channels](figures/cycle_mean_distributions.png)
+
+Figure 1. Each observation is one cycle's channel mean. The boxplots use the
+1,449 cycles with `stable_flag == 0`, grouped by pump leakage label `0/1/2`
+(489/480/480 cycles). Cooler condition, valve condition, and accumulator
+pressure are pooled. Repeated cycles within a condition block are not treated
+as independent experimental runs.
+
 Several patterns are visible in these summaries:
 
 - `EPS1` has a higher median in labels `1` and `2` than in label `0`.
@@ -71,6 +79,14 @@ Their bands show the interquartile range across eligible cycles for each label.
 The phase table uses the source sampling rate for each channel, so the phase
 boundaries refer to the same six 10-second intervals even though the number of
 samples per interval differs by channel.
+
+![Pointwise median and interquartile range of hydraulic signals by pump leakage label](figures/raw_trace_summaries.png)
+
+Figure 2. Lines show the pointwise median over the 60-second cycle; shaded
+bands show the 25th–75th percentiles across eligible cycles, not confidence
+intervals. The same 1,449 stable cycles and pooled component conditions are
+used as in Figure 1. These are summaries across repeated cycles, not individual
+recording traces.
 
 ## Other component conditions
 
@@ -276,5 +292,6 @@ environment information:
 - `outputs/physical_interpretation/cycle_mean_distributions.png`
 - `outputs/physical_interpretation/raw_trace_summaries.png`
 
-Raw data and generated outputs remain local. The public source for this
+Raw data and generated CSV/JSON outputs remain local. Public copies of the two
+figures are stored under `docs/hydraulic/figures/`. The public source for this
 analysis is [`src/run_physical_interpretation.py`](../../src/run_physical_interpretation.py).
