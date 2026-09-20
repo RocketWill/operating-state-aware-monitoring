@@ -138,6 +138,8 @@ The formal Figure 3 uses the bearing-level version. It first takes the median RM
 outputs/paderborn_figures/vibration_rms_bearing_level.png
 ```
 
+![Bearing-level vibration RMS by operating condition and health](figures/vibration_rms_bearing_level.png)
+
 > Each point represents one bearing, using the median RMS across its eligible recordings under the corresponding operating condition.
 
 The recording-level figure remains available as a supplementary view of raw recording variation. The bearing-level figure follows the independence unit used by the train/test protocol more closely and is the main Figure 3.

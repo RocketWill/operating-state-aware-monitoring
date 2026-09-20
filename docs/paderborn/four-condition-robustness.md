@@ -57,6 +57,16 @@ The shift effect is not identical across test conditions. Current drops for all 
 
 These results do not support one universal robustness ranking yet. The direction and size of the shift effect depend on the test condition, so the condition itself remains part of the result.
 
+## Figures
+
+### Figure 1 — Matched vs. shifted Macro-F1
+
+![Matched vs. shifted Macro-F1 across operating conditions](figures/matched_shifted_macro_f1.png)
+
+### Figure 2 — Shifted minus matched Macro-F1
+
+![Shifted minus matched Macro-F1 across operating conditions](figures/shifted_minus_matched_macro_f1.png)
+
 ## 目前理解
 
 四個 operating conditions 可以先簡化成：

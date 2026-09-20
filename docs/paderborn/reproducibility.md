@@ -71,3 +71,5 @@ The experiments use deterministic bearing-level folds, fixed feature names, fixe
 ## Current local verification
 
 The current local environment passed the Python compilation check and each Paderborn experiment exited successfully after the raw recordings were extracted. The public repository does not contain the raw recordings or generated CSV/JSON results, so a new checkout must prepare the data directory before running the commands above.
+
+The three main figures are committed under `docs/paderborn/figures/` and are embedded in the corresponding public notes.
