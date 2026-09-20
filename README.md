@@ -280,6 +280,56 @@ The Paderborn case studies whether current and vibration measurements can separa
 
 The local data layout, source links, and signal notes are in [Paderborn dataset notes](data/paderborn/README.md). The reproducibility steps are in [Paderborn reproducibility](docs/paderborn/reproducibility.md).
 
+### Main results
+
+Under the matched `N15_M07_F10` condition, vibration gives the strongest result:
+
+| Sensor group | Macro-F1 |
+|---|---:|
+| Current | 0.6421 |
+| Vibration | 0.9289 |
+| Current + vibration | 0.7740 |
+
+Adding current to vibration does not improve this matched result. Under the
+fixed features and logistic-regression model, the combined score is lower than
+the vibration-only score.
+
+The four-condition comparison is less uniform. Current declines under every
+condition shift, with macro-F1 changes from `-0.0605` to `-0.1582`. Vibration
+declines in three conditions but improves by `+0.1975` for `N09_M07_F10`.
+Combined features range from a `-0.3248` drop under `N15_M01_F10` to a
+`+0.1441` improvement under `N09_M07_F10`. The operating condition therefore
+remains part of the result; there is no single robustness ranking that holds
+across all four conditions.
+
+The bearing-level vibration RMS comparison adds signal-level context. Damaged
+bearings usually have higher RMS in three conditions, but the direction
+reverses under `N09_M07_F10`. The healthy and damaged distributions also
+overlap, and damaged bearings differ substantially from one another. Vibration
+carries useful damage information here, but it is not a fixed threshold or a
+condition-free signature.
+
+### Figures
+
+Figure 1 compares matched and shifted macro-F1 for each sensor group. See the
+[four-condition robustness notes](docs/paderborn/four-condition-robustness.md)
+for the full table and protocol.
+
+![Matched and shifted macro-F1 across operating conditions](docs/paderborn/figures/matched_shifted_macro_f1.png)
+
+Figure 2 shows the same result as `shifted - matched`. Negative cells indicate
+a decline after the training condition changes; positive cells indicate an
+improvement in that test condition.
+
+![Shifted minus matched macro-F1](docs/paderborn/figures/shifted_minus_matched_macro_f1.png)
+
+Figure 3 returns to the signal itself. Each point is one bearing, using the
+median vibration RMS across its eligible recordings under that operating
+condition. See the [signal feature interpretation](docs/paderborn/signal-feature-interpretation.md)
+for the recording-level checks and limits of the interpretation.
+
+![Bearing-level vibration RMS by operating condition and health](docs/paderborn/figures/vibration_rms_bearing_level.png)
+
 Main Paderborn runs:
 
 | Experiment | Command |
@@ -292,9 +342,29 @@ Main Paderborn runs:
 
 The raw Paderborn recordings and generated outputs remain local and are not committed.
 
+## What the two cases say about measurement value
+
+The Hydraulic case starts with a strong pressure-and-flow reference and asks
+whether another measurement still adds information. Motor power raises
+macro-F1 from `0.9723` to `0.9855`, vibration gives a smaller increase to
+`0.9765`, and temperature does not improve the reference under the fixed
+features and model.
+
+The Paderborn case asks a different part of the same question. Vibration is the
+strongest single measurement in the first matched comparison, but its result
+changes with the operating condition. Combining current and vibration is also
+not consistently better than vibration alone.
+
+Together, the two cases show that measurement value depends on the target, the
+measurements already available, and the operating state. A measurement can be
+informative on its own without adding much to an existing sensor set. It can
+also work well in one operating condition and become weaker, stronger, or
+different in another. The raw scores are not compared across the two datasets;
+their targets and evaluation protocols are different.
+
 ## Scope limits
 
-This case does not establish a universally optimal sensor set, a cross-device
+These cases do not establish a universally optimal sensor set, a cross-device
 classifier, production deployment, remaining useful life, energy savings, or a
 causal physical mechanism. The labels are compared as observed condition
 values; they are not treated as a measured temporal degradation trajectory.
